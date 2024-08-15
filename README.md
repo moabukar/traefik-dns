@@ -30,3 +30,11 @@ traefik version
 
 sudo snap install docker
 ```
+
+## Running traefik locally
+
+```
+
+traefik --configfile=/traefik.yml
+
+```

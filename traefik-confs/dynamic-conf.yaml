@@ -1,4 +1,4 @@
-# dynamic_conf.yml
+# dynamic-conf.yml
 
 http:
   routers:
@@ -18,15 +18,23 @@ http:
       tls:
         certResolver: letsencrypt
 
+    traefik-dashboard:
+      rule: "Host(`traefik.dev.moabukar.co.uk`)"
+      entryPoints:
+      - websecure
+      service: api@internal
+      tls:
+        certResolver: letsencrypt
+
   services:
     paste-bin:
       loadBalancer:
         servers:
-        - url: "http://paste-bin:8000"
+        - url: "http://localhost:8000"
         passHostHeader: true
 
     paste-bin2:
       loadBalancer:
         servers:
-        - url: "http://paste-bin2:8000"
+        - url: "http://localhost:8000"
         passHostHeader: true

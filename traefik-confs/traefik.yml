@@ -9,6 +9,7 @@ log:
 
 api:
   dashboard: true
+  insecure: false
 
 entryPoints:
   web:
@@ -37,12 +38,11 @@ certificatesResolvers:
         delayBeforeCheck: "20"
 
 providers:
+  file:
+    filename: /Users/mohameda/Documents/learning/traefik-dns/traefik-confs/dynamic-conf.yml
+    watch: true
+
   docker:
     endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: false
-    watch: true
-
-  # Static file provider for dynamic configuration
-  file:
-    filename: /dynamic_conf.yml
     watch: true
