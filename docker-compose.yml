@@ -11,29 +11,21 @@ services:
     image: traefik:latest
     container_name: traefik
     restart: always
-    security_opt:
-      - no-new-privileges:true
     command:
       - "--log.level=DEBUG"
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
       - --api.dashboard=false
-      # Set up LetsEncrypt certificate resolver
       - --certificatesresolvers.letsencrypt.acme.dnschallenge=true
       - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare
       - --certificatesResolvers.letsencrypt.acme.dnschallenge.resolvers=1.1.1.1:53,1.0.0.1:53
       - --certificatesResolvers.letsencrypt.acme.dnschallenge.delayBeforeCheck=20
-
       - --certificatesresolvers.letsencrypt.acme.email=moabukar9@gmail.com
       - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
-      # # staging environment of LE, remove for real certs
-      # - --certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
-      # Set up an insecure listener that redirects all traffic to TLS
       - --entrypoints.web.address=:80
       - --entrypoints.websecure.address=:443
       - --entrypoints.web.http.redirections.entrypoint.to=websecure
       - --entrypoints.web.http.redirections.entrypoint.scheme=https
-      # Set up the TLS configuration for our websecure listener
       - --entrypoints.websecure.http.tls=true
       - --entrypoints.websecure.http.tls.certResolver=letsencrypt
       - --entrypoints.websecure.http.tls.domains[0].main=dev.moabukar.co.uk
@@ -51,15 +43,14 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./certs:/letsencrypt
 
-
   paste-bin:
     container_name: paste-bin
     image: ghcr.io/enchant97/hasty-paste:latest
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - 'traefik.http.routers.paste.rule=Host(`paste.dev.moabukar.co.uk`)' # will use the wildcard subdomain certificate
-      - "traefik.http.routers.paste.entrypoints=websecure"
+      - 'traefik.http.routers.paste-bin.rule=Host(`paste.dev.moabukar.co.uk`)' # unique router name
+      - "traefik.http.routers.paste-bin.entrypoints=websecure"
 
   paste-bin2:
     container_name: paste-bin2
@@ -67,5 +58,5 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - 'traefik.http.routers.paste.rule=Host(`paste2.dev.moabukar.co.uk`)' # will use the wildcard subdomain certificate
-      - "traefik.http.routers.paste.entrypoints=websecure"
+      - 'traefik.http.routers.paste-bin2.rule=Host(`paste2.dev.moabukar.co.uk`)' # unique router name
+      - "traefik.http.routers.paste-bin2.entrypoints=websecure"
