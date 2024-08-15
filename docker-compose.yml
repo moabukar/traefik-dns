@@ -58,5 +58,14 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - 'traefik.http.routers.paste.rule=Host(`sample.moabukar.co.uk`)' # will use the wildcard subdomain certificate
+      - 'traefik.http.routers.paste.rule=Host(`paste.dev.moabukar.co.uk`)' # will use the wildcard subdomain certificate
+      - "traefik.http.routers.paste.entrypoints=websecure"
+
+  paste-bin2:
+    container_name: paste-bin2
+    image: ghcr.io/enchant97/hasty-paste:latest
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - 'traefik.http.routers.paste.rule=Host(`paste2.dev.moabukar.co.uk`)' # will use the wildcard subdomain certificate
       - "traefik.http.routers.paste.entrypoints=websecure"
