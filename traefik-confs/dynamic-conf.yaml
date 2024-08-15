@@ -1,0 +1,32 @@
+# dynamic_conf.yml
+
+http:
+  routers:
+    paste-bin:
+      rule: "Host(`paste.dev.moabukar.co.uk`)"
+      entryPoints:
+      - websecure
+      service: paste-bin
+      tls:
+        certResolver: letsencrypt
+
+    paste-bin2:
+      rule: "Host(`paste2.dev.moabukar.co.uk`)"
+      entryPoints:
+      - websecure
+      service: paste-bin2
+      tls:
+        certResolver: letsencrypt
+
+  services:
+    paste-bin:
+      loadBalancer:
+        servers:
+        - url: "http://paste-bin:8000"
+        passHostHeader: true
+
+    paste-bin2:
+      loadBalancer:
+        servers:
+        - url: "http://paste-bin2:8000"
+        passHostHeader: true

@@ -15,3 +15,15 @@
 - Run the docker compose with `docker compose up -d`
 - Now access your apps `app.yourdomain.co.uk`
 - You should see the apps working with SSL via Let's encrypt
+
+
+## Others
+
+### Install Traefik on VM (linux raw)
+
+```bash
+wget https://github.com/traefik/traefik/releases/download/v3.1.2/traefik_v3.1.2_linux_amd64.tar.gz
+tar -xvzf traefik_v3.1.2_linux_amd64.tar.gz
+sudo mv traefik /usr/local/bin/traefik
+traefik version
+```
