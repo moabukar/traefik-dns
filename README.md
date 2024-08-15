@@ -3,6 +3,7 @@
 ## Step by step config:
 
 - Create a VM and install docker. Clone this repo
+    `ssh -i yourkey.pem user@ip`
 - Create Cloudflare token with Zone/Zone Read and Zone/DNS edit. 
     - put these secrets in the folder secrets `secrets` and create files `cloudflare-email.secret` and `cloudflare-token.secret`. Place your cloudflare email and cloudflare scoped api token here.
 - Run docker compose file and update your domain in line 31,32
