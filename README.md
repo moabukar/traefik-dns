@@ -20,11 +20,13 @@
 
 ## Others
 
-### Install Traefik on VM (linux raw)
+### Install Traefik & others on VM (linux raw)
 
 ```bash
 wget https://github.com/traefik/traefik/releases/download/v3.1.2/traefik_v3.1.2_linux_amd64.tar.gz
 tar -xvzf traefik_v3.1.2_linux_amd64.tar.gz
 sudo mv traefik /usr/local/bin/traefik
 traefik version
+
+sudo snap install docker
 ```
