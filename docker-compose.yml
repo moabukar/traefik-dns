@@ -20,7 +20,7 @@ services:
       - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare
       - --certificatesResolvers.letsencrypt.acme.dnschallenge.resolvers=1.1.1.1:53,1.0.0.1:53
       - --certificatesResolvers.letsencrypt.acme.dnschallenge.delayBeforeCheck=20
-      - --certificatesresolvers.letsencrypt.acme.email=moabukar9@gmail.com
+      - --certificatesresolvers.letsencrypt.acme.email=<>
       - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
       - --entrypoints.web.address=:80
       - --entrypoints.websecure.address=:443
@@ -43,6 +43,24 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./certs:/letsencrypt
 
+  site:
+    container_name: site
+    image: moabukar/mosite:28f8151
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - 'traefik.http.routers.site.rule=Host(`site.dev.moabukar.co.uk`)' # unique router name
+      - "traefik.http.routers.site.entrypoints=websecure"
+
+  subnet-calc:
+    container_name: subnet-calc
+    image: moabukar/subnet-calc:b33ba69
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - 'traefik.http.routers.subnet-calc.rule=Host(`subnet.dev.moabukar.co.uk`)' # unique router name
+      - "traefik.http.routers.subnet-calc.entrypoints=websecure"
+
   paste-bin:
     container_name: paste-bin
     image: ghcr.io/enchant97/hasty-paste:latest
@@ -52,11 +70,6 @@ services:
       - 'traefik.http.routers.paste-bin.rule=Host(`paste.dev.moabukar.co.uk`)' # unique router name
       - "traefik.http.routers.paste-bin.entrypoints=websecure"
 
-  paste-bin2:
-    container_name: paste-bin2
-    image: ghcr.io/enchant97/hasty-paste:latest
-    restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      - 'traefik.http.routers.paste-bin2.rule=Host(`paste2.dev.moabukar.co.uk`)' # unique router name
-      - "traefik.http.routers.paste-bin2.entrypoints=websecure"
+
+
+

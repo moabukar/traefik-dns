@@ -28,7 +28,7 @@ entryPoints:
 certificatesResolvers:
   letsencrypt:
     acme:
-      email: moabukar9@gmail.com
+      email: <>
       storage: /letsencrypt/acme.json
       dnsChallenge:
         provider: cloudflare

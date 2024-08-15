@@ -10,14 +10,6 @@ http:
       tls:
         certResolver: letsencrypt
 
-    paste-bin2:
-      rule: "Host(`paste2.dev.moabukar.co.uk`)"
-      entryPoints:
-      - websecure
-      service: paste-bin2
-      tls:
-        certResolver: letsencrypt
-
     traefik-dashboard:
       rule: "Host(`traefik.dev.moabukar.co.uk`)"
       entryPoints:
